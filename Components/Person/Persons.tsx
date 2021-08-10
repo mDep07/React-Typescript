@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { FormEvent, useEffect, useState } from 'react';
 import './style.modules.css';
 
 // {
@@ -73,17 +73,77 @@ const useUsers = () => {
       .then(usersFetch => setUsers(usersFetch));
   }, []);
 
-  return { users };
+  const addNewUser = (user: IPerson) => {
+    const id =
+      users
+        .map(u => u.id)
+        .sort((a, b) => a - b)
+        .reverse()[0] + 1;
+    user.id = id;
+    setUsers([...users, user]);
+  };
+
+  return { users, addNewUser };
 };
 
 export default () => {
-  const { users } = useUsers();
+  let initialState: IPerson = {
+    id: 0,
+    name: '',
+    username: '',
+    email: ''
+  };
+  const [newUser, setNewUser] = useState(initialState);
+  const { users, addNewUser } = useUsers();
+
+  const handleSubmitForm = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    console.log(newUser);
+    addNewUser(newUser);
+    setNewUser(initialState);
+  };
+
+  const handleChange = (element: FormEvent<HTMLInputElement>) => {
+    setNewUser({
+      ...newUser,
+      [element.currentTarget.name]: element.currentTarget.value
+    });
+  };
 
   return (
-    <div>
-      {users.map(person => {
-        <div className="card">{person.name}</div>;
-      })}
+    <div className="container">
+      {users.map(person => (
+        <div className="card" key={person.id}>
+          {person.name}
+        </div>
+      ))}
+
+      <form action="" id="form" onSubmit={handleSubmitForm}>
+        <div>
+          <label htmlFor="name">Name</label>
+          <input
+            required
+            type="text"
+            id="name"
+            name="name"
+            value={newUser.name}
+            onChange={handleChange}
+          />
+        </div>
+        <div>
+          <label htmlFor="username">Username</label>
+          <input
+            required
+            type="text"
+            id="username"
+            name="username"
+            value={newUser.username}
+            onChange={handleChange}
+          />
+        </div>
+
+        <input type="submit" value="Send" />
+      </form>
     </div>
   );
 };
