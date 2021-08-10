@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { render } from 'react-dom';
 import './style.css';
 
-import Person from './Components/Person/Person';
+import Persons from './Components/Person/Persons';
 
 interface AppProps {}
 interface AppState {
@@ -20,7 +20,7 @@ class App extends Component<AppProps, AppState> {
   render() {
     return (
       <div>
-        <Person />
+        <Persons />
         <p>Start editing to see some magic happen :)</p>
       </div>
     );
