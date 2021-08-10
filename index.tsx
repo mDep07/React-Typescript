@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { render } from 'react-dom';
 import './style.css';
 
-import Persons from './Components/Person/Persons';
+import Persons from './Components/Users/ListUsers';
 
 interface AppProps {}
 interface AppState {
@@ -21,7 +21,6 @@ class App extends Component<AppProps, AppState> {
     return (
       <div>
         <Persons />
-        <p>Start editing to see some magic happen :)</p>
       </div>
     );
   }

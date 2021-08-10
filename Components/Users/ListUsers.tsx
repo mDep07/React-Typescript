@@ -1,5 +1,6 @@
 import React, { FormEvent, useEffect, useState } from 'react';
 import './style.modules.css';
+import User from './User';
 
 // {
 //   "id": 1,
@@ -25,7 +26,7 @@ import './style.modules.css';
 //   }
 // },
 
-interface IPerson {
+export interface IPerson {
   id: number;
   name: string;
   username: string;
@@ -112,10 +113,8 @@ export default () => {
 
   return (
     <div className="container">
-      {users.map(person => (
-        <div className="card" key={person.id}>
-          {person.name}
-        </div>
+      {users.map(user => (
+        <User user={user} />
       ))}
 
       <form action="" id="form" onSubmit={handleSubmitForm}>
